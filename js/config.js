@@ -482,19 +482,21 @@ const paramMapping = {
 	palette: { key: "palette", parser: parsePalette(false) },
 	stripeColors: { key: "stripeColors", parser: parseColors(false) },
 	backgroundColor: { key: "backgroundColor", parser: parseColor(false) },
-	cursorColor: { key: "cursorColor", parser: parseColor(false) },
 	glintColor: { key: "glintColor", parser: parseColor(false) },
 
 	paletteHSL: { key: "palette", parser: parsePalette(true) },
 	stripeHSL: { key: "stripeColors", parser: parseColors(true) },
 	backgroundHSL: { key: "backgroundColor", parser: parseColor(true) },
-	cursorHSL: { key: "cursorColor", parser: parseColor(true) },
 	glintHSL: { key: "glintColor", parser: parseColor(true) },
 
 	cursorIntensity: {
 		key: "cursorIntensity",
 		parser: (s) => nullNaN(range(parseFloat(s), 0, Infinity)),
 	},
+	cursorColor: { key: "cursorColor", parser: parseColor(false) },
+	hideCursor: { key: "hideCursor", parser: isTrue },
+	cursorHSL: { key: "cursorColor", parser: parseColor(true) },
+
 
 	glyphIntensity: {
 		key: "glyphIntensity",
@@ -576,6 +578,10 @@ export default (urlParams) => {
 	if (config.bloomSize <= 0) {
 		config.bloomStrength = 0;
 	}
-
+	
+	if (config.hideCursor) {
+		document.body.style.cursor = "none";
+	}
+	
 	return config;
 };
